@@ -6,9 +6,5 @@ metadata:
 services:
     abacdemo-web:
         project: src/ABACDemo.Web
-        host: containerapp
+        host: appservice
         language: dotnet
-resources:
-    abacdemo-web:
-        type: host.containerapp
-        port: 8080
