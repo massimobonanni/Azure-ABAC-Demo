@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: azure-abac-demo
+metadata:
+    template: azd-init@1.23.0
+services:
+    abacdemo-web:
+        project: src/ABACDemo.Web
+        host: containerapp
+        language: dotnet
+resources:
+    abacdemo-web:
+        type: host.containerapp
+        port: 8080
