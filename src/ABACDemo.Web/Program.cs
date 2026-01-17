@@ -1,6 +1,16 @@
+using ABACDemo.Web.Interfaces;
+using StorageContentPlatform.Web.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile("appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.local.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
 // Add services to the container.
+builder.Services.AddScoped<IContentsService, StorageContentsService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

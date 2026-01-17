@@ -1,9 +1,9 @@
-﻿using Azure.Core;
+﻿using ABACDemo.Web.Entities;
+using ABACDemo.Web.Interfaces;
+using Azure.Core;
 using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using StorageContentPlatform.Web.Entities;
-using StorageContentPlatform.Web.Interfaces;
 
 namespace StorageContentPlatform.Web.Services
 {
@@ -24,7 +24,6 @@ namespace StorageContentPlatform.Web.Services
             this.configuration = configuration;
             this.configurationValues = new Configuration();
         }
-
 
         #region [ Public Methods - IContentsService implementation ]
         public async Task<IEnumerable<ContainerInfo>> GetContainersAsync(CancellationToken cancellationToken = default)
@@ -57,9 +56,9 @@ namespace StorageContentPlatform.Web.Services
             return result;
         }
 
-        public async Task<IEnumerable<Entities.BlobInfo>> GetBlobsAsync(string containerName, DateTime date, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<ABACDemo.Web.Entities.BlobInfo>> GetBlobsAsync(string containerName, DateTime date, CancellationToken cancellationToken = default)
         {
-            var result = new List<Entities.BlobInfo>();
+            var result = new List<ABACDemo.Web.Entities.BlobInfo>();
             LoadConfig();
 
             BlobContainerClient containerClient = CreateBlobContainerClient(containerName);
@@ -74,7 +73,7 @@ namespace StorageContentPlatform.Web.Services
             {
                 foreach (var blob in blobPage.Values)
                 {
-                    var blobInfo = new Entities.BlobInfo();
+                    var blobInfo = new ABACDemo.Web.Entities.BlobInfo();
                     blobInfo.Name = blob.Name;
                     blobInfo.LastModified = blob.Properties.LastModified;
                     blobInfo.ReplicationPolicyId = blob.ObjectReplicationSourceProperties?[0].PolicyId;
@@ -220,6 +219,11 @@ namespace StorageContentPlatform.Web.Services
                 secondaryUrl = $"https://{configurationValues.StorageAccountName}-secondary.blob.core.windows.net";
             }
             return secondaryUrl;
+        }
+
+        Task<IEnumerable<ABACDemo.Web.Entities.BlobInfo>> IContentsService.GetBlobsAsync(string containerName, DateTime date, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion [ Private Methods ]
