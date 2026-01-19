@@ -68,7 +68,7 @@ resource appSettings 'Microsoft.Web/sites/config@2022-03-01' = {
   properties: {
     APPINSIGHTS_INSTRUMENTATIONKEY: applicationInsight.properties.InstrumentationKey
     APPINSIGHTS_CONNECTION_STRING: 'InstrumentationKey=${applicationInsight.properties.InstrumentationKey}'
-    StorageAccountBlobUri: storageAccount.properties.primaryEndpoints.blob
+    StorageAccountName: storageAccount.name
   }
 }
 
