@@ -1,11 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ABACDemo.Web.Interfaces;
+using ABACDemo.Web.Models.StorageController;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ABACDemo.Web.Controllers
 {
     public class StorageController : Controller
     {
-        public IActionResult Index()
+        private readonly IContentsService _contentsService;
+        private readonly ILogger<StorageController> _logger;
+
+        public StorageController(IContentsService contentsService, ILogger<StorageController> logger)
         {
+            ArgumentNullException.ThrowIfNull(contentsService);
+            ArgumentNullException.ThrowIfNull(logger);
+
+            _contentsService = contentsService;
+            _logger = logger;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var model = new IndexViewModel();
+            model.Containers = await _contentsService.GetContainersAsync();
             return View();
         }
     }

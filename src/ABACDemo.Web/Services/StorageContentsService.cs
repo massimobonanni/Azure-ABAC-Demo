@@ -11,7 +11,6 @@ namespace StorageContentPlatform.Web.Services
     {
         private class Configuration
         {
-            public string? StorageConnectionString { get; set; }
             public string? StorageAccountName { get; set; }
             public IEnumerable<string>? ContainerTypes { get; set; }
         }
@@ -63,10 +62,8 @@ namespace StorageContentPlatform.Web.Services
 
             BlobContainerClient containerClient = CreateBlobContainerClient(containerName);
 
-            var blobPrefix = date.ToString("yyyyMMdd");
-
             var resultSegment = containerClient
-                    .GetBlobsAsync(BlobTraits.All, BlobStates.None, blobPrefix, cancellationToken)
+                    .GetBlobsAsync(BlobTraits.All, BlobStates.All, null, cancellationToken)
                     .AsPages(default, 100);
 
             await foreach (var blobPage in resultSegment)
@@ -115,7 +112,6 @@ namespace StorageContentPlatform.Web.Services
         #region [ Private Methods ]
         private void LoadConfig()
         {
-            this.configurationValues.StorageConnectionString = this.configuration.GetValue<string>("StorageConnectionString");
             this.configurationValues.StorageAccountName = this.configuration.GetValue<string>("StorageAccountName");
             this.configurationValues.ContainerTypes = this.configuration.GetValue<string>("ContainerTypes")?
                     .ToLower()
@@ -126,19 +122,10 @@ namespace StorageContentPlatform.Web.Services
         {
             BlobServiceClient? blobServiceClient = null;
 
-            if (!string.IsNullOrWhiteSpace(this.configurationValues.StorageConnectionString))
-            {
-                blobServiceClient = new BlobServiceClient(
-                    this.configurationValues.StorageConnectionString,
-                    GetClientOptions());
-            }
-            else
-            {
-                blobServiceClient = new BlobServiceClient(
-                    new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net"),
-                    new DefaultAzureCredential(),
-                    GetClientOptions());
-            }
+            blobServiceClient = new BlobServiceClient(
+                new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net"),
+                new DefaultAzureCredential(),
+                GetClientOptions());
 
             return blobServiceClient;
         }
@@ -146,20 +133,12 @@ namespace StorageContentPlatform.Web.Services
         private BlobContainerClient CreateBlobContainerClient(string containerName)
         {
             BlobContainerClient? blobContainerClient = null;
-            if (!string.IsNullOrWhiteSpace(this.configurationValues.StorageConnectionString))
-            {
-                blobContainerClient = new BlobContainerClient(
-                    this.configurationValues.StorageConnectionString,
-                    containerName,
-                    GetClientOptions());
-            }
-            else
-            {
+           
                 blobContainerClient = new BlobContainerClient(
                     new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net/{containerName}"),
                     new DefaultAzureCredential(),
                     GetClientOptions());
-            }
+
             return blobContainerClient;
         }
 
@@ -167,21 +146,10 @@ namespace StorageContentPlatform.Web.Services
         {
             BlobClient? blobClient = null;
 
-            if (!string.IsNullOrWhiteSpace(this.configurationValues.StorageConnectionString))
-            {
-                blobClient = new BlobClient(
-                    this.configurationValues.StorageConnectionString,
-                    containerName,
-                    blobName,
-                    GetClientOptions());
-            }
-            else
-            {
                 blobClient = new BlobClient(
                     new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net/{containerName}/{blobName}"),
                     new DefaultAzureCredential(),
                     GetClientOptions());
-            }
 
             return blobClient;
         }
@@ -196,7 +164,7 @@ namespace StorageContentPlatform.Web.Services
             var secondaryUrl = GetSecondaryUrl();
             if (!string.IsNullOrWhiteSpace(secondaryUrl))
             {
-              options.GeoRedundantSecondaryUri = new Uri(secondaryUrl);  
+                options.GeoRedundantSecondaryUri = new Uri(secondaryUrl);
             }
             return options;
         }
@@ -204,26 +172,8 @@ namespace StorageContentPlatform.Web.Services
         private string? GetSecondaryUrl()
         {
             string? secondaryUrl = null;
-            if (!string.IsNullOrWhiteSpace(configurationValues.StorageConnectionString))
-            {
-                var segments = configurationValues.StorageConnectionString.Split(";");
-                var accountNameSegment = segments.Where(s => s.ToLower().StartsWith("accountname")).FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(accountNameSegment))
-                {
-                    var accountName = accountNameSegment.Split("=")[1];
-                    secondaryUrl = $"https://{accountName}-secondary.blob.core.windows.net";
-                }
-            }
-            else
-            {
                 secondaryUrl = $"https://{configurationValues.StorageAccountName}-secondary.blob.core.windows.net";
-            }
             return secondaryUrl;
-        }
-
-        Task<IEnumerable<ABACDemo.Web.Entities.BlobInfo>> IContentsService.GetBlobsAsync(string containerName, DateTime date, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion [ Private Methods ]
