@@ -2,9 +2,9 @@
 
 using ABACDemo.Web.Entities;
 
-namespace StorageContentPlatform.Web.Models.ContentsController;
+namespace ABACDemo.Web.Models.StorageController;
 
-public class BlobViewModel
+public class BlobViewModel : ViewModelBase
 {
     public string? ContainerName { get; internal set; }
     public BlobContent? Blob { get; internal set; }

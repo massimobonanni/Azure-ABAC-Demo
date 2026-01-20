@@ -16,21 +16,6 @@
         public DateTimeOffset? LastModified { get; internal set; }
 
         /// <summary>
-        /// Gets the replication policy identifier associated with the blob.
-        /// </summary>
-        public string? ReplicationPolicyId { get; internal set; }
-
-        /// <summary>
-        /// Gets the replication rule identifier associated with the blob.
-        /// </summary>
-        public string? ReplicationRuleId { get; internal set; }
-
-        /// <summary>
-        /// Gets the current replication status of the blob.
-        /// </summary>
-        public string? ReplicationStatus { get; internal set; }
-
-        /// <summary>
         /// Gets the size of the blob in bytes.
         /// </summary>
         public long? Size { get; internal set; }
@@ -39,5 +24,32 @@
         /// Gets the access tier of the blob (e.g., Hot, Cool, Archive).
         /// </summary>
         public string? Tier { get; internal set; }
+
+        /// <summary>
+        /// Gets the metadata associated with the blob.
+        /// </summary>
+        public IDictionary<string, string>? Metadata { get; internal set; }
+
+        /// <summary>
+        /// Gets a string representation of the blob metadata, formatted as key-value pairs.
+        /// </summary>
+        /// <remarks>
+        /// Returns metadata as a semicolon-separated string where each pair is formatted as "key=value".
+        /// Returns null if the metadata dictionary is null or empty.
+        /// </remarks>
+        /// <example>
+        /// For metadata with keys "Department" and "Project", the result would be: "Department=IT;Project=Demo"
+        /// </example>
+        public string? MetadataAsString
+        {
+            get
+            {
+                if (Metadata == null || !Metadata.Any())
+                    return null;
+                return Metadata
+                         .Select((k, v) => $"{k}={v}").Aggregate((a, b) => $"{a};{b}");
+            }
+        }
+
     }
 }

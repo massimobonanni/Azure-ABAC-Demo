@@ -1,11 +1,12 @@
 ﻿using ABACDemo.Web.Entities;
+using ABACDemo.Web.Models;
 
-namespace StorageContentPlatform.Web.Models.ContentsController;
+namespace ABACDemo.Web.Models.StorageController;
 
-    public class ContainerViewModel
-    {
-        public string? ContainerName { get; set; }
-        public DateTime Date { get; set; }
-        public IEnumerable<BlobInfo>? Blobs { get; set; }
-    }
+public class ContainerViewModel : ViewModelBase
+{
+    public string? ContainerName { get; set; }
+    public DateTime Date { get; set; }
+    public IEnumerable<BlobInfo>? Blobs { get; set; }
+}
 

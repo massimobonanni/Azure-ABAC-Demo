@@ -32,5 +32,22 @@ namespace ABACDemo.Web.Controllers
             }
             return View(model);
         }
+
+        public async Task<ActionResult> Container(string containerName)
+        {
+            var model = new ContainerViewModel();
+            model.ContainerName = containerName;
+
+            try
+            {
+                model.Blobs = await this._contentsService.GetBlobsAsync(model.ContainerName, model.Date);
+            }
+            catch (Exception ex) {
+                model.Exception = ex;
+                model.Message = ex.Message;
+            }
+            
+            return View(model);
+        }
     }
 }

@@ -1,0 +1,59 @@
+﻿@model ABACDemo.Web.Models.StorageController.ContainerViewModel
+
+@{
+	ViewData["Title"] = $"Container {Model.ContainerName}";
+}
+
+<h3>Container @Model.ContainerName</h3>
+
+@if (Model.HasError)
+{
+	<div class="alert alert-danger mt-3">
+		<h4 class="text-danger">Error</h4>
+		<br />
+		@if (!string.IsNullOrEmpty(Model.Message))
+		{
+			<div style="color: red;">@Model.Message</div>
+		}
+		else
+		{
+			<div style="color: red;">@Model.Exception.Message</div>
+		}
+	</div>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Blob Name</th>
+				<th>Last Modified</th>
+				<th>Access Tier</th>
+				<th>Metadata</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.Blobs)
+			{
+				<tr>
+					<td>
+						@item.Name
+					</td>
+					<td>
+						@item.LastModified?.ToString("dd/MM/yyyy HH:mm:ss zzz")
+					</td>
+					<td>
+						@item.Tier
+					</td>
+					<td>
+						@item.MetadataAsString
+					</td>
+					<td>
+						@Html.ActionLink("View", "Blob", new { containerName = Model.ContainerName, blobName = item.Name })
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

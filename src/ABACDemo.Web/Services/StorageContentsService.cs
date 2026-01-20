@@ -73,12 +73,10 @@ namespace StorageContentPlatform.Web.Services
                     var blobInfo = new ABACDemo.Web.Entities.BlobInfo();
                     blobInfo.Name = blob.Name;
                     blobInfo.LastModified = blob.Properties.LastModified;
-                    blobInfo.ReplicationPolicyId = blob.ObjectReplicationSourceProperties?[0].PolicyId;
-                    blobInfo.ReplicationRuleId = blob.ObjectReplicationSourceProperties?[0].Rules?[0].RuleId;
-                    blobInfo.ReplicationStatus = blob.ObjectReplicationSourceProperties?[0].Rules?[0].ReplicationStatus.ToString();
                     blobInfo.Size = blob.Properties.ContentLength;
                     blobInfo.Tier = blob.Properties.AccessTier.HasValue ?
                         blob.Properties.AccessTier.Value.ToString() : null;
+                    blobInfo.Metadata = blob.Metadata;
 
                     result.Add(blobInfo);
                 }
