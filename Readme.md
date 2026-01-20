@@ -69,10 +69,10 @@ The demo consists of:
 │  ┌───────────────────────────────────────────────────┐  │
 │  │              Resource Group (ABAC-Demo)           │  │
 │  │                                                   │  │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌──────────┐  │  │
-│  │  │ App Service │  │   Storage   │  │ App      │  │  │
-│  │  │ (Web App)   │──│   Account   │  │ Insights │  │  │
-│  │  └─────────────┘  └─────────────┘  └──────────┘  │  │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌──────────┐   │  │
+│  │  │ App Service │  │   Storage   │  │ App      │   │  │
+│  │  │ (Web App)   │──│   Account   │  │ Insights │   │  │
+│  │  └─────────────┘  └─────────────┘  └──────────┘   │  │
 │  │                                                   │  │
 │  └───────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────┘
@@ -115,20 +115,7 @@ azd auth login
 
 This will open a browser window for authentication. Follow the prompts to sign in.
 
-### Step 3: Initialize the Environment
-
-Create a new environment for your deployment:
-
-```bash
-azd init
-```
-
-You'll be prompted to:
-- Enter an **environment name** (e.g., `dev`, `prod`, or `abac-demo`)
-- Select your **Azure subscription**
-- Select the **Azure region** for deployment
-
-### Step 4: Provision Infrastructure and Deploy
+### Step 3: Provision Infrastructure and Deploy
 
 Run the following command to provision Azure resources and deploy the application:
 
@@ -136,6 +123,11 @@ Run the following command to provision Azure resources and deploy the applicatio
 azd up
 ```
 
+You'll be prompted to:
+- Enter an **environment name** (e.g., `dev`, `prod`, or `abac-demo`)
+- Select your **Azure subscription**
+- Select the **Azure region** for deployment
+  
 This command will:
 1. **Provision** the Azure infrastructure defined in the `infra/` folder (using Bicep templates)
 2. **Build** the .NET web application
@@ -149,30 +141,6 @@ After successful deployment, `azd` will output the URL of your deployed web appl
 
 ---
 
-## Managing the Deployment
-
-### View Deployment Status
-
-```bash
-azd show
-```
-
-### Update the Application
-
-After making code changes, redeploy with:
-
-```bash
-azd deploy
-```
-
-### Update Infrastructure
-
-After modifying Bicep templates, update infrastructure with:
-
-```bash
-azd provision
-```
-
 ### Clean Up Resources
 
 To delete all Azure resources created by this demo:
@@ -185,28 +153,16 @@ azd down
 
 ---
 
-## Project Structure
+## Demo steps
 
-```
-Azure-ABAC-Demo/
-├── azure.yaml              # Azure Developer CLI configuration
-├── Readme.md               # This file
-├── infra/                  # Infrastructure as Code (Bicep)
-│   ├── main.bicep          # Main deployment template
-│   ├── main.parameters.json
-│   ├── storage.bicep       # Storage account configuration
-│   ├── frontEnd.bicep      # App Service configuration
-│   └── applicationInsight.bicep
-└── src/
-    └── ABACDemo.Web/       # ASP.NET Core Web Application
-        ├── Controllers/    # MVC Controllers
-        ├── Services/       # Business logic services
-        ├── Views/          # Razor views
-        └── ...
-```
+### Step 1: Using the app without roles
+
+### Step 2: Assign a role to the app
+
+### Step 3: Assign a condition to the role of the app
+
 
 ---
-
 ## Additional Resources
 
 - [Azure RBAC Documentation](https://learn.microsoft.com/azure/role-based-access-control/overview)
