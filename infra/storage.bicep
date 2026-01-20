@@ -23,4 +23,24 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   }
 } 
 
+resource storageBlobService 'Microsoft.Storage/storageAccounts/blobServices@2021-04-01' = {
+  name: 'default'
+  parent: storageAccount
+  properties: {
+    deleteRetentionPolicy: {
+      enabled: true
+      days: 7
+    }
+    isVersioningEnabled: true
+  }
+}
+
+resource storageContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-04-01' = {
+  name: 'documents'
+  parent: storageBlobService
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
 output storageName string = storageAccount.name
