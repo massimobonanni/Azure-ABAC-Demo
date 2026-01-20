@@ -38,7 +38,7 @@
         /// Returns null if the metadata dictionary is null or empty.
         /// </remarks>
         /// <example>
-        /// For metadata with keys "Department" and "Project", the result would be: "Department=IT;Project=Demo"
+        /// For metadata with keys "Department" and "Project", the result would be: "Department=IT ; Project=Demo"
         /// </example>
         public string? MetadataAsString
         {
@@ -47,7 +47,8 @@
                 if (Metadata == null || !Metadata.Any())
                     return null;
                 return Metadata
-                         .Select((k, v) => $"{k}={v}").Aggregate((a, b) => $"{a};{b}");
+                         .Select(k => $"{k.Key}={k.Value}")
+                         .Aggregate((a, b) => $"{a};{b}");
             }
         }
 
