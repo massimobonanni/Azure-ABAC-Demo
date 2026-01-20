@@ -39,7 +39,7 @@ namespace StorageContentPlatform.Web.Services
             {
                 foreach (BlobContainerItem containerItem in containerPage.Values)
                 {
-                    if (containerItem.HasMetadataValues("containerType", this.configurationValues.ContainerTypes))
+                    if (!this.configurationValues.ContainerTypes.Any() || containerItem.HasMetadataValues("containerType", this.configurationValues.ContainerTypes))
                     {
                         var containerInfo = new ContainerInfo();
                         containerInfo.Name = containerItem.Name;
@@ -115,7 +115,9 @@ namespace StorageContentPlatform.Web.Services
             this.configurationValues.StorageAccountName = this.configuration.GetValue<string>("StorageAccountName");
             this.configurationValues.ContainerTypes = this.configuration.GetValue<string>("ContainerTypes")?
                     .ToLower()
-                    .Split("|", StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries);
+                    .Split("|", StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries)
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .ToList();
         }
 
         private BlobServiceClient CreateBlobServiceClient()
@@ -133,11 +135,11 @@ namespace StorageContentPlatform.Web.Services
         private BlobContainerClient CreateBlobContainerClient(string containerName)
         {
             BlobContainerClient? blobContainerClient = null;
-           
-                blobContainerClient = new BlobContainerClient(
-                    new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net/{containerName}"),
-                    new DefaultAzureCredential(),
-                    GetClientOptions());
+
+            blobContainerClient = new BlobContainerClient(
+                new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net/{containerName}"),
+                new DefaultAzureCredential(),
+                GetClientOptions());
 
             return blobContainerClient;
         }
@@ -146,10 +148,10 @@ namespace StorageContentPlatform.Web.Services
         {
             BlobClient? blobClient = null;
 
-                blobClient = new BlobClient(
-                    new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net/{containerName}/{blobName}"),
-                    new DefaultAzureCredential(),
-                    GetClientOptions());
+            blobClient = new BlobClient(
+                new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net/{containerName}/{blobName}"),
+                new DefaultAzureCredential(),
+                GetClientOptions());
 
             return blobClient;
         }
@@ -172,7 +174,7 @@ namespace StorageContentPlatform.Web.Services
         private string? GetSecondaryUrl()
         {
             string? secondaryUrl = null;
-                secondaryUrl = $"https://{configurationValues.StorageAccountName}-secondary.blob.core.windows.net";
+            secondaryUrl = $"https://{configurationValues.StorageAccountName}-secondary.blob.core.windows.net";
             return secondaryUrl;
         }
 

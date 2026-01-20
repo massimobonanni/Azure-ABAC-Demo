@@ -21,8 +21,16 @@ namespace ABACDemo.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var model = new IndexViewModel();
-            model.Containers = await _contentsService.GetContainersAsync();
-            return View();
+            try
+            {
+                model.Containers = await _contentsService.GetContainersAsync();
+            }
+            catch (Exception ex)
+            {
+                model.Exception = ex;
+                model.Message = ex.Message;
+            }
+            return View(model);
         }
     }
 }
