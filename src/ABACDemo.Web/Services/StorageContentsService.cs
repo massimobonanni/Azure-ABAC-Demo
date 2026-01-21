@@ -11,8 +11,14 @@ namespace StorageContentPlatform.Web.Services
     {
         private class Configuration
         {
+            public bool ForceManagedIdentity { get; set; } = false;
             public string? StorageAccountName { get; set; }
             public IEnumerable<string>? ContainerTypes { get; set; }
+
+            public string StorageBlobUrl
+            {
+                get => $"https://{this.StorageAccountName}.blob.core.windows.net";
+            }
         }
 
         private readonly IConfiguration configuration;
@@ -62,11 +68,26 @@ namespace StorageContentPlatform.Web.Services
 
             BlobContainerClient containerClient = CreateBlobContainerClient(containerName);
 
-            var resultSegment = containerClient
-                    .GetBlobsAsync(BlobTraits.All, BlobStates.All, null, cancellationToken)
-                    .AsPages(default, 100);
+            // Add logging to see which identity is being used
+            Console.WriteLine($"Attempting to list blobs in container: {containerName}");
+            Console.WriteLine($"Using managed identity: {this.configurationValues.ForceManagedIdentity}");
+            Console.WriteLine($"Storage URL: {this.configurationValues.StorageBlobUrl}");
 
-            await foreach (var blobPage in resultSegment)
+            try
+            {
+                // Verify container exists and you have access to it
+                var containerProperties = await containerClient.GetPropertiesAsync(cancellationToken: cancellationToken);
+                Console.WriteLine($"Container properties retrieved successfully. Metadata: {string.Join(", ", containerProperties.Value.Metadata.Select(m => $"{m.Key}={m.Value}"))}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to get container properties: {ex.Message}");
+                throw;
+            }
+
+            var blobPages = containerClient.GetBlobsAsync().AsPages();
+
+            await foreach (var blobPage in blobPages)
             {
                 foreach (var blob in blobPage.Values)
                 {
@@ -81,7 +102,7 @@ namespace StorageContentPlatform.Web.Services
                     result.Add(blobInfo);
                 }
             }
-            return result.OrderByDescending(b => b.LastModified);
+            return result.OrderBy(b => b.Name);
         }
 
         public async Task<BlobContent> GetBlobAsync(string containerName, string blobName, CancellationToken cancellationToken)
@@ -110,6 +131,7 @@ namespace StorageContentPlatform.Web.Services
         #region [ Private Methods ]
         private void LoadConfig()
         {
+            this.configurationValues.ForceManagedIdentity = this.configuration.GetValue<bool>("ForceManagedIdentity");
             this.configurationValues.StorageAccountName = this.configuration.GetValue<string>("StorageAccountName");
             this.configurationValues.ContainerTypes = this.configuration.GetValue<string>("ContainerTypes")?
                     .ToLower()
@@ -123,8 +145,8 @@ namespace StorageContentPlatform.Web.Services
             BlobServiceClient? blobServiceClient = null;
 
             blobServiceClient = new BlobServiceClient(
-                new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net"),
-                new DefaultAzureCredential(),
+                new Uri(this.configurationValues.StorageBlobUrl),
+                GetCredential(),
                 GetClientOptions());
 
             return blobServiceClient;
@@ -135,8 +157,8 @@ namespace StorageContentPlatform.Web.Services
             BlobContainerClient? blobContainerClient = null;
 
             blobContainerClient = new BlobContainerClient(
-                new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net/{containerName}"),
-                new DefaultAzureCredential(),
+                new Uri($"{this.configurationValues.StorageBlobUrl}/{containerName}"),
+                GetCredential(),
                 GetClientOptions());
 
             return blobContainerClient;
@@ -147,33 +169,35 @@ namespace StorageContentPlatform.Web.Services
             BlobClient? blobClient = null;
 
             blobClient = new BlobClient(
-                new Uri($"https://{this.configurationValues.StorageAccountName}.blob.core.windows.net/{containerName}/{blobName}"),
-                new DefaultAzureCredential(),
+                new Uri($"{this.configurationValues.StorageBlobUrl}/{containerName}/{blobName}"),
+                GetCredential(),
                 GetClientOptions());
 
             return blobClient;
         }
 
+        private TokenCredential GetCredential()
+        {
+            TokenCredential credential = null;
+            if (this.configurationValues.ForceManagedIdentity)
+            {
+                credential = new ManagedIdentityCredential();
+            }
+            else
+            {
+                credential = new DefaultAzureCredential();
+            }
+            return credential;
+        }
+
         private BlobClientOptions GetClientOptions()
         {
             var options = new BlobClientOptions();
-            options.Retry.Delay = TimeSpan.FromSeconds(2);
+            options.Retry.Delay = TimeSpan.FromMilliseconds(250);
             options.Retry.MaxRetries = 5;
             options.Retry.Mode = RetryMode.Exponential;
-            options.Retry.MaxDelay = TimeSpan.FromSeconds(10);
-            var secondaryUrl = GetSecondaryUrl();
-            if (!string.IsNullOrWhiteSpace(secondaryUrl))
-            {
-                options.GeoRedundantSecondaryUri = new Uri(secondaryUrl);
-            }
+            options.Retry.MaxDelay = TimeSpan.FromSeconds(5);
             return options;
-        }
-
-        private string? GetSecondaryUrl()
-        {
-            string? secondaryUrl = null;
-            secondaryUrl = $"https://{configurationValues.StorageAccountName}-secondary.blob.core.windows.net";
-            return secondaryUrl;
         }
 
         #endregion [ Private Methods ]
