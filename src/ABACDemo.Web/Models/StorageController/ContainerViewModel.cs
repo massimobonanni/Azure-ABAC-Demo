@@ -5,6 +5,7 @@ namespace ABACDemo.Web.Models.StorageController;
 
 public class ContainerViewModel : ViewModelBase
 {
+    public string? AccountName { get; set; }
     public string? ContainerName { get; set; }
     public DateTime Date { get; set; }
     public IEnumerable<BlobInfo>? Blobs { get; set; }

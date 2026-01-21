@@ -1,7 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ABACDemo.Web.Models.HomeController.IndexViewModel
+
+@{
+	ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to RBAC/ABAC Demo</h1>
+	<h1 class="display-4">Welcome to RBAC/ABAC Demo</h1>
+	<h3 class="display-6">Storage Account Name : @Model.AccountName</h3>
 </div>

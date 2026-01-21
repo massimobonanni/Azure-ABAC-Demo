@@ -1,14 +1,28 @@
 using ABACDemo.Web.Models;
+using ABACDemo.Web.Models.HomeController;
 using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
 using System.Diagnostics;
 
 namespace ABACDemo.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IConfiguration _configuration;
+
+        public HomeController(IConfiguration configuration)
+        {
+            ArgumentNullException.ThrowIfNull(configuration); 
+            this._configuration = configuration;
+        }
+
+
         public IActionResult Index()
         {
-            return View();
+            var model= new IndexViewModel();
+            model.AccountName = _configuration["StorageAccountName"];
+
+            return View(model);
         }
 
         public IActionResult Privacy()
