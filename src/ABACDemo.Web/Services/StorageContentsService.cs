@@ -68,24 +68,10 @@ namespace StorageContentPlatform.Web.Services
 
             BlobContainerClient containerClient = CreateBlobContainerClient(containerName);
 
-            // Add logging to see which identity is being used
-            Console.WriteLine($"Attempting to list blobs in container: {containerName}");
-            Console.WriteLine($"Using managed identity: {this.configurationValues.ForceManagedIdentity}");
-            Console.WriteLine($"Storage URL: {this.configurationValues.StorageBlobUrl}");
 
-            try
-            {
-                // Verify container exists and you have access to it
-                var containerProperties = await containerClient.GetPropertiesAsync(cancellationToken: cancellationToken);
-                Console.WriteLine($"Container properties retrieved successfully. Metadata: {string.Join(", ", containerProperties.Value.Metadata.Select(m => $"{m.Key}={m.Value}"))}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to get container properties: {ex.Message}");
-                throw;
-            }
-
-            var blobPages = containerClient.GetBlobsAsync().AsPages();
+            var blobPages = containerClient
+                .GetBlobsAsync(new GetBlobsOptions() { Traits = BlobTraits.Metadata })
+                .AsPages();
 
             await foreach (var blobPage in blobPages)
             {

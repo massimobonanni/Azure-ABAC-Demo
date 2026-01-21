@@ -48,7 +48,7 @@
                     return null;
                 return Metadata
                          .Select(k => $"{k.Key}={k.Value}")
-                         .Aggregate((a, b) => $"{a};{b}");
+                         .Aggregate((a, b) => $"{a} ; {b}");
             }
         }
 
