@@ -1,0 +1,36 @@
+QUARTERLY SALES REPORT
+========================================
+Report ID: RPT-2026-001
+Period: Q4 2025 (October - December)
+Generated: January 3, 2026
+Prepared by: Analytics Department
+
+EXECUTIVE SUMMARY
+----------------------------------------
+This report provides an overview of sales performance
+for the fourth quarter of 2025.
+
+KEY METRICS
+----------------------------------------
+Total Revenue:          $2,847,500.00
+Units Sold:             12,450
+New Customers:          342
+Customer Retention:     94.2%
+
+REGIONAL BREAKDOWN
+----------------------------------------
+Region          Revenue         Growth
+North America   $1,425,000      +12.5%
+Europe          $892,300        +8.3%
+Asia Pacific    $530,200        +15.7%
+
+TOP PERFORMING PRODUCTS
+----------------------------------------
+1. Enterprise Cloud Suite    - $845,000
+2. Professional Services     - $623,500
+3. Data Analytics Platform   - $412,800
+4. Security Solutions        - $356,200
+5. Mobile Applications       - $298,000
+
+Report Status: FINAL
+Distribution: Executive Team, Sales Leadership

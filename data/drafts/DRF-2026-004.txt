@@ -1,0 +1,57 @@
+DRAFT - VENDOR CONTRACT TERMS
+========================================
+Document ID: DRF-2026-004
+Status: DRAFT - NEGOTIATION IN PROGRESS
+Created: January 17, 2026
+Author: Procurement Department
+
+VENDOR INFORMATION
+----------------------------------------
+Vendor Name: TechSupply Solutions Inc.
+Contact: Robert Anderson
+Account Rep: Sarah Kim
+
+CONTRACT SUMMARY
+----------------------------------------
+Service: IT Hardware Procurement
+Term: 24 months
+Start Date: February 1, 2026 (proposed)
+
+PRICING TERMS (NEGOTIATING)
+----------------------------------------
+Item                    Our Ask     Vendor Offer
+Laptops (per unit)      $850        $920
+Monitors (per unit)     $280        $310
+Docking Stations        $150        $175
+Volume Discount         15%         10%
+
+[NOTE: Push for 12% minimum discount]
+
+PAYMENT TERMS
+----------------------------------------
+Current Proposal: Net 45
+Our Preference: Net 60
+[Awaiting vendor response]
+
+SERVICE LEVEL AGREEMENTS
+----------------------------------------
+- Delivery: Within 10 business days
+- Warranty: 3 years on-site
+- Support: 24/7 phone support
+- Replacement: 48-hour turnaround
+
+OUTSTANDING ISSUES
+----------------------------------------
+1. Warranty terms - need extension to 4 years
+2. Shipping costs - should be included
+3. Return policy - 30 days minimum
+4. Price lock for contract duration
+
+NEXT STEPS
+----------------------------------------
+[ ] Schedule call with vendor - Jan 20
+[ ] Legal review of terms - Jan 22
+[ ] Final negotiation - Jan 25
+[ ] Contract signing target - Jan 30
+
+*** INTERNAL USE ONLY - DO NOT SHARE ***

@@ -1,0 +1,49 @@
+DRAFT - PROJECT PROPOSAL
+========================================
+Document ID: DRF-2026-001
+Status: DRAFT - NOT FOR DISTRIBUTION
+Created: January 12, 2026
+Author: Jennifer Martinez
+
+PROJECT TITLE
+----------------------------------------
+Cloud Migration Initiative - Phase 2
+
+OBJECTIVE
+----------------------------------------
+Migrate remaining on-premises workloads to Azure
+cloud infrastructure to improve scalability and
+reduce operational costs.
+
+SCOPE
+----------------------------------------
+- 15 legacy applications
+- 8 database servers
+- File storage systems
+- Backup and disaster recovery
+
+ESTIMATED TIMELINE
+----------------------------------------
+Start Date: March 1, 2026
+End Date: August 31, 2026
+Duration: 6 months
+
+BUDGET ESTIMATE
+----------------------------------------
+Infrastructure:     $125,000
+Professional Services: $85,000
+Training:           $15,000
+Contingency:        $25,000
+TOTAL:              $250,000
+
+[TODO: Add risk assessment section]
+[TODO: Get stakeholder sign-off]
+[TODO: Review with IT security team]
+
+NOTES
+----------------------------------------
+- Need to confirm Azure region selection
+- Pending vendor quotes for migration tools
+- Schedule meeting with department heads
+
+*** THIS IS A WORKING DRAFT ***

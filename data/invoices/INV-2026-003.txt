@@ -1,0 +1,51 @@
+INVOICE
+========================================
+Invoice Number: INV-2026-003
+Date: January 12, 2026
+Due Date: January 27, 2026
+
+FROM:
+Global Office Supplies Co.
+555 Business Park Ave
+Austin, TX 78701
+Email: sales@globalsupplies.com
+
+TO:
+Adventure Works Cycles
+888 Gear Street
+San Francisco, CA 94102
+Contact: Michael Chen
+
+----------------------------------------
+ITEMS:
+----------------------------------------
+1. Ergonomic Office Chairs
+   Quantity: 10
+   Unit Price: $349.99
+   Amount: $3,499.90
+
+2. Standing Desks - Adjustable
+   Quantity: 5
+   Unit Price: $599.00
+   Amount: $2,995.00
+
+3. Monitor Arms - Dual Display
+   Quantity: 10
+   Unit Price: $89.00
+   Amount: $890.00
+
+4. Keyboard Trays
+   Quantity: 10
+   Unit Price: $45.00
+   Amount: $450.00
+
+----------------------------------------
+                    Subtotal: $7,834.90
+                    Tax (8.25%): $646.38
+                    TOTAL:    $8,481.28
+----------------------------------------
+
+Payment Terms: Net 15
+Payment Method: Purchase Order #PO-2026-445
+
+Thank you for your business!

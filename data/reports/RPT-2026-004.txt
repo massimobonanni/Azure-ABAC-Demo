@@ -1,0 +1,28 @@
+CUSTOMER SATISFACTION ANALYSIS
+========================================
+Report ID: RPT-2026-004
+Period: H2 2025 (July - December)
+Generated: January 10, 2026
+Prepared by: Customer Experience Team
+
+OVERALL SATISFACTION SCORES
+----------------------------------------
+Net Promoter Score (NPS):       72
+Customer Satisfaction (CSAT):   4.3/5.0
+Customer Effort Score (CES):    4.1/5.0
+
+SUPPORT METRICS
+----------------------------------------
+Total Tickets:          4,567
+Avg Resolution Time:    4.2 hours
+First Contact Resolution: 78%
+Escalation Rate:        8%
+
+CUSTOMER RETENTION
+----------------------------------------
+Renewal Rate:           91.5%
+Churn Rate:             8.5%
+Expansion Revenue:      +23%
+
+Report Status: FINAL
+Distribution: Customer Success, Product Team

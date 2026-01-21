@@ -1,0 +1,46 @@
+INVOICE
+========================================
+Invoice Number: INV-2026-001
+Date: January 5, 2026
+Due Date: February 5, 2026
+
+FROM:
+Contoso Technologies Ltd.
+123 Innovation Drive
+Seattle, WA 98101
+Email: billing@contoso.com
+
+TO:
+Northwind Traders Inc.
+456 Commerce Street
+Portland, OR 97201
+Contact: John Smith
+
+----------------------------------------
+ITEMS:
+----------------------------------------
+1. Cloud Hosting Services (Monthly)
+   Quantity: 1
+   Unit Price: $1,250.00
+   Amount: $1,250.00
+
+2. Technical Support - Premium Plan
+   Quantity: 1
+   Unit Price: $450.00
+   Amount: $450.00
+
+3. Data Backup Solution
+   Quantity: 3
+   Unit Price: $75.00
+   Amount: $225.00
+
+----------------------------------------
+                    Subtotal: $1,925.00
+                    Tax (8%):   $154.00
+                    TOTAL:    $2,079.00
+----------------------------------------
+
+Payment Terms: Net 30
+Payment Method: Bank Transfer
+
+Thank you for your business!

@@ -1,0 +1,26 @@
+IT INFRASTRUCTURE STATUS REPORT
+========================================
+Report ID: RPT-2026-003
+Period: January 2026
+Generated: January 15, 2026
+Prepared by: IT Operations Team
+
+SYSTEM AVAILABILITY
+----------------------------------------
+Overall Uptime:         99.97%
+Planned Downtime:       2.1 hours
+Unplanned Downtime:     0.4 hours
+SLA Compliance:         100%
+
+CLOUD RESOURCES (AZURE)
+----------------------------------------
+Resource Type           Count   Monthly Cost
+Virtual Machines        156     $45,230
+Storage Accounts        23      $8,450
+SQL Databases           18      $12,800
+App Services            42      $6,720
+Cosmos DB Instances     8       $4,200
+Total Cloud Spend:              $77,400
+
+Report Status: INTERNAL
+Distribution: IT Leadership, CTO Office

@@ -1,0 +1,26 @@
+FINANCIAL SUMMARY REPORT
+========================================
+Report ID: RPT-2026-005
+Period: Fiscal Year 2025
+Generated: January 18, 2026
+Prepared by: Finance Department
+
+INCOME STATEMENT HIGHLIGHTS
+----------------------------------------
+Total Revenue:          $12,450,000
+Cost of Goods Sold:     $4,980,000
+Gross Profit:           $7,470,000
+Operating Expenses:     $5,230,000
+Operating Income:       $2,240,000
+Net Income:             $1,792,000
+
+KEY FINANCIAL RATIOS
+----------------------------------------
+Gross Margin:           60%
+Operating Margin:       18%
+Net Profit Margin:      14.4%
+Current Ratio:          2.8
+Debt-to-Equity:         0.49
+
+Report Status: CONFIDENTIAL
+Distribution: Executive Team, Board of Directors

@@ -1,0 +1,25 @@
+EMPLOYEE PERFORMANCE SUMMARY
+========================================
+Report ID: RPT-2026-002
+Period: Annual Review 2025
+Generated: January 8, 2026
+Prepared by: Human Resources Department
+
+WORKFORCE STATISTICS
+----------------------------------------
+Total Employees:        1,247
+New Hires (2025):       186
+Voluntary Turnover:     8.3%
+Average Tenure:         4.2 years
+
+PERFORMANCE DISTRIBUTION
+----------------------------------------
+Rating              Count       Percentage
+Exceptional         124         10%
+Exceeds Expectations 374        30%
+Meets Expectations  624         50%
+Needs Improvement   112         9%
+Unsatisfactory      13          1%
+
+Report Status: CONFIDENTIAL
+Distribution: HR Leadership, Department Heads

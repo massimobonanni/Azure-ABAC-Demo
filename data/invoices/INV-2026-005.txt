@@ -1,0 +1,56 @@
+INVOICE
+========================================
+Invoice Number: INV-2026-005
+Date: January 18, 2026
+Due Date: February 18, 2026
+
+FROM:
+TechServe IT Consultants
+400 Innovation Center
+Boston, MA 02101
+Email: billing@techserve.com
+
+TO:
+Tailspin Toys Corporation
+999 Playtime Avenue
+New York, NY 10001
+Contact: David Williams
+
+----------------------------------------
+ITEMS:
+----------------------------------------
+1. Network Infrastructure Audit
+   Quantity: 1
+   Unit Price: $4,500.00
+   Amount: $4,500.00
+
+2. Security Assessment & Penetration Test
+   Quantity: 1
+   Unit Price: $7,200.00
+   Amount: $7,200.00
+
+3. Firewall Configuration
+   Quantity: 3 units
+   Unit Price: $850.00
+   Amount: $2,550.00
+
+4. IT Consulting Hours
+   Quantity: 20 hours
+   Unit Price: $175.00
+   Amount: $3,500.00
+
+5. Documentation & Training
+   Quantity: 1
+   Unit Price: $1,500.00
+   Amount: $1,500.00
+
+----------------------------------------
+                    Subtotal: $19,250.00
+                    Tax (8.875%):$1,708.44
+                    TOTAL:    $20,958.44
+----------------------------------------
+
+Payment Terms: Net 30
+Payment Method: Check or Wire Transfer
+
+Thank you for your business!
