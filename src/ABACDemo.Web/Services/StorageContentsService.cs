@@ -102,12 +102,27 @@ namespace StorageContentPlatform.Web.Services
             var blobContent = await blobClient.DownloadContentAsync(cancellationToken);
 
             if (blobContent.HasValue)
+            { 
                 result.Content = blobContent.Value.Content.ToString();
+                if (blobContent.Value.Details.Metadata != null)
+                {
+                    result.Metadata = blobContent.Value.Details.Metadata;
+                }
+            }
+            
+            if (result.Metadata == null)
+            {
+                var properties = await blobClient.GetPropertiesAsync(null, cancellationToken);
 
-            var properties = await blobClient.GetPropertiesAsync(null, cancellationToken);
+                if (properties.HasValue)
+                    result.Metadata = properties.Value.Metadata;
+            }
 
-            if (properties.HasValue)
-                result.Metadata = properties.Value.Metadata;
+            var tags = await blobClient.GetTagsAsync(cancellationToken: cancellationToken);
+            if (tags.HasValue && tags.Value.Tags != null && tags.Value.Tags.Any())
+            {
+                result.Indexes = tags.Value.Tags;
+            }
 
             return result;
         }

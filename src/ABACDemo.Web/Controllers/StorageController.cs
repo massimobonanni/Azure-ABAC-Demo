@@ -55,5 +55,23 @@ namespace ABACDemo.Web.Controllers
 
             return View(model);
         }
+
+        public async Task<ActionResult> Blob(string containerName, string blobName)
+        {
+            var model = new BlobViewModel();
+            model.AccountName = _configuration["StorageAccountName"];
+            model.ContainerName = containerName;
+            try
+            {
+                model.Blob = await this._contentsService.GetBlobAsync(containerName, blobName);
+            }
+            catch (Exception ex)
+            {
+                model.Blob = new Entities.BlobContent() { Name = blobName };
+                model.Exception = ex;
+                model.Message = ex.Message;
+            }
+            return View(model);
+        }
     }
 }

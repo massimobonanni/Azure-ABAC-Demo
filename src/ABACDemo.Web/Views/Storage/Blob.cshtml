@@ -1,0 +1,66 @@
+﻿@model ABACDemo.Web.Models.StorageController.BlobViewModel
+
+@{
+	ViewData["Title"] = $"Container {Model.ContainerName} - Blob {Model.Blob.Name}";
+}
+
+<h3>@Html.ActionLink(Model.ContainerName, "Container", new { containerName = Model.ContainerName })/@Model.Blob.Name</h3>
+
+@if (Model.HasError)
+{
+	<div class="alert alert-danger mt-3">
+		<h4 class="text-danger">Error</h4>
+		<br />
+		@if (!string.IsNullOrEmpty(Model.Message))
+		{
+			<div style="color: red;">@Model.Message</div>
+		}
+		else
+		{
+			<div style="color: red;">@Model.Exception.Message</div>
+		}
+	</div>
+}
+else
+{
+    <br />
+    <hr />
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                Indexes
+            </dt>
+            <dd class="col-sm-10">
+                @foreach (var item in Model.Blob.Indexes)
+                {
+                    <div>@item.Key = @item.Value</div>
+                }
+            </dd>
+        </dl>
+    </div>
+    <hr/>
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                Metadata
+            </dt>
+            <dd class="col-sm-10">
+                @foreach (var item in Model.Blob.Metadata)
+                {
+                    <div>@item.Key = @item.Value</div>
+                }
+            </dd>
+        </dl>
+    </div>
+    <hr />
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                Content
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Blob.Content
+            </dd>
+        </dl>
+    </div>
+}
