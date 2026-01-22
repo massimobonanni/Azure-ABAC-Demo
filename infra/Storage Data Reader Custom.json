@@ -1,0 +1,20 @@
+{
+    "properties": {
+        "roleName": "Storage Blob Data Reader Custom (with tags)",
+        "description": "Allows for read access to Azure Storage blob containers, data and read tags from blobs",
+        "permissions": [
+            {
+                "actions": [
+                    "Microsoft.Storage/storageAccounts/blobServices/containers/read",
+                    "Microsoft.Storage/storageAccounts/blobServices/generateUserDelegationKey/action"
+                ],
+                "notActions": [],
+                "dataActions": [
+                    "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read",
+                    "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/tags/read"
+                ],
+                "notDataActions": []
+            }
+        ]
+    }
+}
