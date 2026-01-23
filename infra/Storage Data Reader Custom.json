@@ -2,6 +2,9 @@
     "properties": {
         "roleName": "Storage Blob Data Reader Custom (with tags)",
         "description": "Allows for read access to Azure Storage blob containers, data and read tags from blobs",
+        "assignableScopes": [
+            "/"
+        ],
         "permissions": [
             {
                 "actions": [
