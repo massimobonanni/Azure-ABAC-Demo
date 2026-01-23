@@ -63,19 +63,16 @@ The demo consists of:
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Azure Subscription                    │
-│  ┌───────────────────────────────────────────────────┐  │
-│  │              Resource Group (ABAC-Demo)           │  │
-│  │                                                   │  │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌──────────┐   │  │
-│  │  │ App Service │  │   Storage   │  │ App      │   │  │
-│  │  │ (Web App)   │──│   Account   │  │ Insights │   │  │
-│  │  └─────────────┘  └─────────────┘  └──────────┘   │  │
-│  │                                                   │  │
-│  └───────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+   subgraph sub[Azure Subscription]
+      subgraph rg[Resopurce Group]
+         app[App Service]
+         stg[Storage Account]
+         ai[Application Insights]
+         app --> stg
+      end
+   end
 ```
 
 ---
@@ -124,20 +121,23 @@ azd up
 ```
 
 You'll be prompted to:
+
 - Enter an **environment name** (e.g., `dev`, `prod`, or `abac-demo`)
 - Select your **Azure subscription**
 - Select the **Azure region** for deployment
   
 This command will:
+
 1. **Provision** the Azure infrastructure defined in the `infra/` folder (using Bicep templates)
 2. **Build** the .NET web application
 3. **Deploy** the application to Azure App Service
 
 The deployment typically takes 5-10 minutes.
-
-### Step 5: Access the Application
-
 After successful deployment, `azd` will output the URL of your deployed web application. Open this URL in your browser to access the demo.
+
+### Step 4: Upload demo blobs
+
+After successful deployment, follow the instructions in [this page](.\data\readme.md) to upload the blobs for the demo.
 
 ---
 
@@ -157,10 +157,55 @@ azd down
 
 ### Step 1: Using the app without roles
 
+After deploying the demo on Azure, you follow the steps:
+
+1. Navigate to the home page of the App Service;
+2. Open the containers page;
+3. You should receive an authorization error because the App Service managed identity has no role assigned on the Storage Account.
+
 ### Step 2: Assign a role to the app
+
+The App Service is deployend with a System-Assigned Managed Identity.
+In this step you, assign the `Storage Blob Data Reader` role to the App Service Managed Identity.
+Follows the steps:
+
+1. Open the Azure portal and go to the **Storage account** created by the deployment.
+2. In the left menu, select **Access control (IAM)**.
+3. Select **+ Add** > **Add role assignment**.
+4. In the **Role** tab, search for and select **Storage Blob Data Reader**.
+5. In the **Members** tab:
+   - **Assign access to**: select **Managed identity**.
+   - Select **+ Select members**.
+   - In **Managed identity**, choose **App Service**.
+   - Select your deployed Web App (the App Service created by `azd up`) and then **Select**.
+6. In the **Review + assign** tab, select **Review + assign**.
+7. Wait 1–2 minutes for permissions to propagate, then refresh the app and open the **Containers** page again.
+
+After assigning the role, repeat the steps in **Step 1: Using the app without roles**. Now you should see the list of the containers, for each container the list of blobs and the content of each blob.
+
+> Tip: If you still get an authorization error after assigning the role, wait a bit longer and try again. RBAC changes can take a few minutes to take effect.
+
 
 ### Step 3: Assign a condition to the role of the app
 
+In this step, you configure the ABAC condition to read only blobs with a tag index `category = invoice`:
+
+1. Open the Azure portal and go to the **Storage account** created by the deployment.
+2. In the left menu, select **Access control (IAM)**.
+3. Select **Role assignments** tab and search for the App Service Managed Identity.
+4. Click on **Add** link on the right side.
+5. In the **Condition #1** section, click on **+ Add action** (sub-section **1. Add action**).
+6. Select **Read a blob** action (You are selecting the action you want to allow when the condition is true) and press **Select**.
+7. In the **Condition #1** section, click on **+ Add expression** (sub-section **2. Build expression**).
+8. Use the following configurations (leave all the other configuration as default):
+   - Attribute source : `Resource`,
+   - Attribute : `Blob index tags [Values in key]`,
+   - Key : `category`,
+   - Operator : `StringEqualsIgnoreCase`,
+   - Value : `invoice`
+9.Save the condition pressing `Save` button
+
+> Tip: If you still read blobs with a category not equal to `invoice` after assigning the condition, wait a bit longer and try again. ABAC changes can take a few minutes to take effect.
 
 ---
 ## Additional Resources
